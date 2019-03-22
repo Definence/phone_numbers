@@ -1,4 +1,6 @@
-class UsersController < ApplicationController
+class UsersController < BaseController
+  skip_before_action :authenticate_user!
+
   def create
     user = User.new(user_params)
     return render json: { user: user }, status: :created if user.save
