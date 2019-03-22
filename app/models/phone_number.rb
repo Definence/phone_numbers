@@ -13,14 +13,7 @@ class PhoneNumber < ApplicationRecord
     presence: true,
     uniqueness: true
 
-  def assign_number
-    number = generate_number
-    self.save
-  end
-
-  private
-
-  def generate_number
-    rand(NUMBERS_STARTS_WITH..NUMBERS_END_WITH)
+  def self.generate_number
+    rand(PhoneNumber::NUMBERS_STARTS_WITH..PhoneNumber::NUMBERS_END_WITH)
   end
 end

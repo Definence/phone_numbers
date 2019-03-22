@@ -1,12 +1,13 @@
 require 'test_helper'
 
 RSpec.describe PhoneNumbersController, type: :controller do
+  let(:user) { create(:user) }
+  before { login_user(user) }
+
   describe '#create' do
-    let(:user) { create(:user) }
     let(:params) { { number: { value: 1111111111 } } }
 
     before do
-      login_user(user)
       post :create, params: params
     end
 
@@ -34,5 +35,14 @@ RSpec.describe PhoneNumbersController, type: :controller do
       it { expect(response.status).to be(422) }
       it { expect(json.errors.number).not_to be_empty }
     end
+  end
+
+  describe '#generate' do
+    before do
+      post :generate
+    end
+
+    it { expect(response).to be_successful }
+    it { expect(json.number).not_to be_nil }
   end
 end

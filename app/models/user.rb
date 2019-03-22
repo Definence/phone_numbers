@@ -11,4 +11,11 @@ class User < ApplicationRecord
     user = User.find_by(email: params[:email])&.authenticate(params[:password])
     user.auth_token if user
   end
+
+  def generate_phone_number
+    loop do
+      number = self.build_phone_number(number: PhoneNumber::generate_number)
+      break if number.save
+    end
+  end
 end
